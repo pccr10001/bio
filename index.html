@@ -32,7 +32,7 @@
       [*]
       <a href="https://pccr10001.github.io/ecc.html"
         >Elliptic Curve Online Calculator</a
-      ><br />
+      ><br /><br />
     </div>
     <script>
       var ip = "";
@@ -76,6 +76,7 @@
             $("body").append($("#url-txt"));
             $("#url-txt").css("display", "inherit");
             $(".typed-cursor").remove();
+            showRandom();
           },
         });
       }
@@ -118,6 +119,20 @@
             showBio();
           },
         });
+      }
+
+      function showRandom(){
+          insertPrompt("rand");
+          var typed = new Typed(".typed-rand",{
+            strings: ["Hello !!",
+            "nmap -A 10.0.0.0/16 -v",
+            "python exp.py 10.0.1.1",
+            ],
+            loop: true,
+            backDelay: 3500,
+            typeSpeed: 70,
+            cursorChar: " ",
+          })
       }
       $(document).ready(function () {
         getIP();
