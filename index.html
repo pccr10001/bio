@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>This is Power Li</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"
+      integrity="sha512-BdHyGtczsUoFcEma+MfXc71KJLv/cd+sUsUaYYf2mXpfG/PtBjNXsPo78+rxWjscxUYN2Qr2+DbeGGiJx81ifg=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/terminal.js"></script>
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <div id="bio-txt" style="display: none">
+      [+] This is <a class="highlight">Power Li</a>.<br />
+      [+] Working on <a style="color: #16c60c">Information/IoT Security</a>,
+      <a style="color: #f9f1a5">DevOps</a>.<br /><br />
+    </div>
+    <div id="url-txt" style="display: none">
+      [*] <a href="/blog">Blog</a><br />
+      [*] <a href="https://github.com/pccr10001">Github</a><br />
+      [*]
+      <a href="https://pccr10001.github.io/wpa.html">RPi WPA Config Generator</a
+      ><br />
+      [*]
+      <a href="https://pccr10001.github.io/ecc.html"
+        >Elliptic Curve Online Calculator</a
+      ><br />
+    </div>
+    <script>
+      var ip = "";
+
+      function getIP() {
+        fetch("https://power.li/ip")
+          .then((resp) => resp.json())
+          .then((resp) => {
+            ip = resp.ip;
+            showIp();
+          });
+      }
+
+      function insertPrompt(id) {
+        $("body").append(
+          '<div class=""><a class="username">ubuntu</a>@<a class="servername">PLHome:</a><a class="path">/home/ubuntu</a> $ <span class="typed-' +
+            id +
+            '"></span></div>'
+        );
+      }
+
+      function showBio() {
+        insertPrompt("bio");
+        var typed = new Typed(".typed-bio", {
+          strings: ["whoami"],
+          typeSpeed: 60,
+          onComplete: () => {
+            $("body").append($("#bio-txt"));
+            $("#bio-txt").css("display", "inherit");
+            $(".typed-cursor").remove();
+            showUrls();
+          },
+        });
+      }
+      function showUrls() {
+        insertPrompt("url");
+        var typed = new Typed(".typed-url", {
+          strings: ["cat ./urls"],
+          typeSpeed: 50,
+          onComplete: () => {
+            $("body").append($("#url-txt"));
+            $("#url-txt").css("display", "inherit");
+            $(".typed-cursor").remove();
+          },
+        });
+      }
+
+      function showIp() {
+        insertPrompt("ip");
+        var typed = new Typed(".typed-ip", {
+          strings: ["ip addr"],
+          typeSpeed: 75,
+          onComplete: () => {
+            var ipstr =
+              '<div class="puts">1: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq state UP group default qlen 1000<br />&nbsp;&nbsp;&nbsp;&nbsp;link/ether de:ad:be:ef:66:66 brd ff:ff:ff:ff:ff:ff<br />';
+            if (ip.indexOf(":") > 0) {
+              ipstr +=
+                "&nbsp;&nbsp;&nbsp;&nbsp;inet6 " +
+                ip +
+                "/128 scope global dynamic noprefixroute";
+            } else {
+              n = ip.split(".");
+              ipstr +=
+                "inet " +
+                n[0] +
+                "." +
+                n[1] +
+                "." +
+                n[2] +
+                "." +
+                n[3] +
+                "/24 brd " +
+                n[0] +
+                "." +
+                n[1] +
+                "." +
+                n[2] +
+                ".255 scope global dynamic eth0";
+            }
+            ipstr+="<br>"
+            $("body").append(ipstr+"<br /></div>");
+            $(".typed-cursor").remove();
+            showBio();
+          },
+        });
+      }
+      $(document).ready(function () {
+        getIP();
+      });
+    </script>
+  </body>
+</html>
