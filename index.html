@@ -20,8 +20,11 @@
   <body>
     <div id="bio-txt" style="display: none">
       [+] This is <a class="highlight">Power Li</a>.<br />
-      [+] Working on <a style="color: #16c60c">Information/IoT Security</a>,
-      <a style="color: #f9f1a5">DevOps</a>.<br /><br />
+      [+] Working on <a style="color: #16c60c">SecOps</a>,
+      <a style="color: #f9f1a5">DevOps</a>,<a style="color: #3B78FF"
+        > IoT Security</a
+      >.<br /> [+] Like to use <a style="color: #29beb0">Golang</a>,
+      <a style="color: #e74856">Java</a>, Bash.<br /><br />
     </div>
     <div id="url-txt" style="display: none">
       [*] <a href="/blog">Blog</a><br />
@@ -113,26 +116,27 @@
                 n[2] +
                 ".255 scope global dynamic eth0";
             }
-            ipstr+="<br>"
-            $("body").append(ipstr+"<br /></div>");
+            ipstr += "<br>";
+            $("body").append(ipstr + "<br /></div>");
             $(".typed-cursor").remove();
             showBio();
           },
         });
       }
 
-      function showRandom(){
-          insertPrompt("rand");
-          var typed = new Typed(".typed-rand",{
-            strings: ["Hello !!",
+      function showRandom() {
+        insertPrompt("rand");
+        var typed = new Typed(".typed-rand", {
+          strings: [
+            "Hello !!",
             "nmap -A 10.0.0.0/16 -v",
             "python exp.py 10.0.1.1",
-            ],
-            loop: true,
-            backDelay: 3500,
-            typeSpeed: 70,
-            cursorChar: " ",
-          })
+          ],
+          loop: true,
+          backDelay: 3500,
+          typeSpeed: 70,
+          cursorChar: " ",
+        });
       }
       $(document).ready(function () {
         getIP();
